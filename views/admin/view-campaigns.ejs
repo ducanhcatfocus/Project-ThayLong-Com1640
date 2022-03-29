@@ -1,0 +1,37 @@
+<%- include('../_layout/adminHeader') %> 
+
+<h2 class="page-title">Campaigns</h2>
+<a href="/admin/create_campaign" class="btn btn-primary">Create a new campaign</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(campaigns != ''){%> <% campaigns.forEach(function(campaign, index){ %>
+              <tr>
+                <td><%- index %></td>
+                <td><%-campaign.title%></td>
+                <td><%-campaign.category %> </td>
+                <% if(campaign.first_closure > current){%>
+                    <td style="color: green;">Open</td>
+                <% }else if(campaign.first_closure <= current && campaign.final_closure > current){%> 
+                    <td style="color: orange;">First Closure Closed</td>
+                <%}else{%>
+                    <td style="color: red;">Closed</td>
+                <% } %> 
+                <td>
+                    <a href="/admin/campaign/<%- campaign._id %>" class="btn btn-primary" onclick="">Edit</a>
+                    <a href="/admin/delete_campaign/<%- campaign._id %>" class="btn btn-danger" onclick="">Delete</a>
+                </td>
+              </tr>
+              <% }) %> 
+        <% } %>
+    </tbody>
+</table>
+<%- include('../_layout/footer')  %> 

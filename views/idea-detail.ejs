@@ -1,0 +1,69 @@
+<%- include('_layout/header') %> 
+
+<div class="row products">
+     <% if(idea != ''){%>
+        <div class="row no-gutters bg-light position-relative">
+         <% idea.upload_file.forEach(function(file, index){ %> 
+  <div class="col-md-6 mb-md-0 p-md-4">
+    <img src="/uploads/<%= file.default_image %> " width="400 px" height="200px" class="w-100" alt="...">
+    <a href="/uploads/<%= file.filename %>" download="asdd"><%= file.filename %> </a>
+  </div>
+  <% }) %> 
+ <div class="col-md-6 position-static p-4 pl-md-0">
+    <h5 class="mt-0">Title: <%= idea.title %> </h5>
+  </div>
+  <div class="col-md-6 position-static p-4 pl-md-0">
+    Content: <%= idea.content %>
+  </div>
+  <div class="col-md-6 position-static p-4 pl-md-0">
+    View: <%= idea.viewBy.length %> 
+    Comment:<%= idea.comments.length %> 
+    Like: <%= idea.likeBy.length %> 
+    DisLike: <%= idea.dislikeBy.length %> 
+  </div>
+  <% } %> 
+</div>
+
+<% if(isLike){ %> 
+<form action="/unlike/<%= idea._id %> " method="get">
+    <button class="btn btn-primary">UnLike</button>
+</form>
+<% } else{ %> 
+<form action="/like/<%= idea._id %> " method="get">
+    <button class="btn btn-primary">Like</button>
+</form>
+<% } %> 
+
+
+<form action="/dislike/<%= idea._id %> " method="get">
+    <button class="btn btn-primary">Dislike</button>
+</form>
+<br>
+<div class="row products form-group" style="
+  height: 300px;
+  overflow: auto; ">
+     <% if(idea.comments != ''){%> <% idea.comments.forEach(function(comment, index){ %>
+  <div class="col-md-6 position-static p-4 pl-md-0">
+    <h5 class="mt-0">anonymous</h5>
+  </div>
+  
+  <div class="col-md-6 position-static p-4 pl-md-0">
+    <%= comment.content %>
+  </div>
+    <% }) %> 
+    <% } %>
+</div>
+
+
+
+<form action="/comment/<%= idea._id %> " method="post">
+    <div class="form-group">
+        <input type="text" name="comment" id="" value=" " class="form-control" placeholder="" required="true" >
+    </div>
+    <button class="btn btn-primary">Comment</button>
+</form>
+
+
+
+<%- include('_layout/footer')  %> 
+

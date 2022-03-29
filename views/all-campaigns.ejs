@@ -1,0 +1,22 @@
+<%- include('_layout/header') %> 
+
+<div class="row products">
+     <% if(campaigns != ''){%> <% campaigns.forEach(function(campaign, index){ %>
+        <div class="row no-gutters bg-light position-relative">
+  <div class="col-md-6 mb-md-0 p-md-4">
+    <img src="https://www.madeireiraestrela.com.br/images/joomlart/demo/default.jpg" width="400 px" height="200px" class="w-100" alt="...">
+  </div>
+  <div class="col-md-6 position-static p-4 pl-md-0">
+    <h5 class="mt-0">Title: <%= campaign.title %> </h5>
+    <%= campaign.name %>
+    <a href="/campaign_detail/<%= campaign._id %> " class="stretched-link">Go somewhere</a>
+  </div>
+</div>
+<br>
+        <% }) %> 
+    <% } %>
+
+
+
+</div>
+<%- include('_layout/footer')  %> 

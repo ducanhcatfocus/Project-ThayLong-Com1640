@@ -1,0 +1,33 @@
+<%- include('../_layout/adminHeader') %> 
+
+<h2 class="page-title">Accounts</h2>
+<a href="/admin/create_account" class="btn btn-primary">Create a new account</a>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(user != ''){%> <% user.forEach(function(user, index){ %>
+              <tr>
+                <td><%- index %></td>
+                <td><%- user.email %></td>
+                <td><%- user.department %> </td>
+                <td><%- user.role %></td>
+                <td>
+                  <a href="/admin/edit_account/<%- user._id %>" class="btn btn-primary">Edit</a>
+                  <a href="/admin/delete_account/<%- user._id %>" class="btn btn-danger" onclick="">Delete</a>
+                </td>
+              </tr>
+              <% }) %> 
+        <% } %>
+    </tbody>
+</table>
+<%- include('../_layout/footer')  %> 

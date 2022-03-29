@@ -1,0 +1,40 @@
+<%- include('../_layout/qamHeader') %> 
+
+<h2 class="page-title">Categories</h2>
+<br>
+<form action="/qam/create_category" method="post">
+    <div class="form-group">
+        <label for="">Create New Category </label>
+        <input type="text" name="name" id="" class="form-control" placeholder="Category name" required="true" >
+    </div>
+    <button class="btn btn-primary">Add</button>
+</form>
+<br>
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Category</th>
+            <th>Number of Topics</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(categories != ''){%> <% categories.forEach(function(category, index){ %>
+              <tr>
+                <td><%- index %></td>
+                <form action="/qam/edit_category/<%= category._id %> " method="post">
+                    <td><input type="text" name="name" id="" value="<%- category.category %>"></td>
+                    <td><%- category.campaign.length %> </td>
+                    <td>
+                  <button class="btn btn-primary">Edit</button>
+                </form>
+                  <a href="/qam/delete_category/<%- category._id %>" class="btn btn-danger" onclick="">Delete</a>
+                </td>
+              </tr>
+              <% }) %> 
+        <% } %>
+    </tbody>
+</table>
+<%- include('../_layout/footer')  %> 
