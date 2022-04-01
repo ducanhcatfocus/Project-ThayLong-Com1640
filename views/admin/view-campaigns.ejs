@@ -8,6 +8,8 @@
             <th>Id</th>
             <th>Title</th>
             <th>Category</th>
+            <th>First Closure</th>
+            <th>Final Closure</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -18,6 +20,8 @@
                 <td><%- index %></td>
                 <td><%-campaign.title%></td>
                 <td><%-campaign.category %> </td>
+                <td><%- campaign.first_closure.getMonth() + 1 %>/<%- campaign.first_closure.getDate()%>/<%- campaign.first_closure.getFullYear() %> <%- campaign.first_closure.getHours()%>:<%- campaign.first_closure.getMinutes() %></td>
+                <td><%- campaign.final_closure.getMonth() + 1 %>/<%- campaign.final_closure.getDate()%>/<%- campaign.final_closure.getFullYear() %> <%- campaign.final_closure.getHours()%>:<%- campaign.final_closure.getMinutes() %></td>
                 <% if(campaign.first_closure > current){%>
                     <td style="color: green;">Open</td>
                 <% }else if(campaign.first_closure <= current && campaign.final_closure > current){%> 

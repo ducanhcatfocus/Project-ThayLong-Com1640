@@ -15,6 +15,7 @@
   <div class="col-md-6 position-static p-4 pl-md-0">
     Content: <%- idea.content %>
   </div>
+  
   <div class="col-md-6 position-static p-4 pl-md-0">
     View: <%= idea.viewBy.length %> 
     Comment:<%= idea.comments.length %> 
@@ -58,9 +59,6 @@
     <% }) %> 
     <% } %>
 </div>
-
-
-
 <form action="/comment/<%= idea._id %> " method="post">
     <div class="form-group">
         <input type="text" name="comment" id="" value=" " class="form-control" placeholder="" required="true" >

@@ -9,14 +9,11 @@ const staffController = {
   home: async (req, res) => {
     try {
       const categories = await Category.find({});
-      const campaign = await Campaign.find({});
       //    if (!categories)
       //      return res.status(400).send({ msg: "User does not exist" });
-
       res.render("index", {
         title: "home",
         categories,
-        allCampaigns: campaign.length,
       });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -27,14 +24,13 @@ const staffController = {
     try {
       const categories = await Category.find({});
       const campaigns = await Campaign.find({});
-      //    if (!categories)
-      //      return res.status(400).send({ msg: "User does not exist" });
+      var current = new Date();
 
       res.render("all-campaigns", {
         title: "List of Campaigns",
         categories,
-        allCampaigns: campaigns.length,
         campaigns,
+        current,
       });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -44,16 +40,15 @@ const staffController = {
   getCampaignByCategory: async (req, res) => {
     try {
       const categories = await Category.find({});
-      const campaign = await Campaign.find({});
-
+      var current = new Date();
       const campaigns = await Campaign.find({ category: req.params.id });
       //    if (!categories)
       //      return res.status(400).send({ msg: "User does not exist" })
       res.render("all-campaigns", {
         title: "List of Campaigns",
         categories,
-        allCampaigns: campaign.length,
         campaigns,
+        current,
       });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -63,17 +58,17 @@ const staffController = {
   getCampaignDetail: async (req, res) => {
     try {
       const categories = await Category.find({});
-      const campaigns = await Campaign.find({});
       const campaign = await Campaign.findOne({ _id: req.params.id });
       const ideas = await Idea.find({ campaign_id: req.params.id });
+      var current = new Date();
       //    if (!categories)
       //      return res.status(400).send({ msg: "User does not exist" })
       res.render("campaign-detail", {
         title: campaign.title,
         categories,
-        allCampaigns: campaigns.length,
         campaign,
         ideas,
+        current,
       });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -82,11 +77,19 @@ const staffController = {
   getCreateIdea: async (req, res) => {
     try {
       const categories = await Category.find({});
-      const campaigns = await Campaign.find({});
+      const campaign = await Campaign.findById({
+        _id: req.params.id,
+      });
+      if (campaign.first_closure <= new Date()) {
+        req.flash(
+          "danger",
+          "Cannot submit new idea because the first closure is over"
+        );
+        return res.redirect("back");
+      }
       res.render("create-ideal", {
         title: "Submit An Idea",
         categories,
-        allCampaigns: campaigns.length,
         campaign_id: req.params.id,
       });
     } catch (error) {
@@ -150,7 +153,6 @@ const staffController = {
   getIdeaDetail: async (req, res) => {
     try {
       const categories = await Category.find({});
-      const campaigns = await Campaign.find({});
       //catch error
       //...........
       const idea = await Idea.findOneAndUpdate(
@@ -186,7 +188,6 @@ const staffController = {
       res.render("idea-detail", {
         title: idea.title,
         categories,
-        allCampaigns: campaigns.length,
         idea,
         likeState,
       });
@@ -197,10 +198,18 @@ const staffController = {
   comment: async (req, res) => {
     try {
       const { comment } = req.body;
-      const user = await Idea.findOne({ _id: req.params.id });
-      const user2 = await User.findOne({ _id: user.user_id });
+      const idea = await Idea.findOne({ _id: req.params.id });
+
+      const campaign = await Campaign.findOne({ _id: idea.campaign_id });
+      if (campaign.final_closure <= new Date()) {
+        req.flash("danger", "Cannot comment because the final closure id over");
+        return res.redirect("back");
+      }
+
+      const user = await User.findOne({ _id: idea.user_id });
+
       mailer.sendMail(
-        user2.email,
+        user.email,
         req.user.email + " commented on your idea at: " + new Date()
       );
 

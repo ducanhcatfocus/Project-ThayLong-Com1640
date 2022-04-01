@@ -7,8 +7,22 @@
     <img src="https://www.madeireiraestrela.com.br/images/joomlart/demo/default.jpg" width="400 px" height="200px" class="w-100" alt="...">
   </div>
   <div class="col-md-6 position-static p-4 pl-md-0">
-    <h5 class="mt-0">Title: <%= campaign.title %> </h5>
-    <%- campaign.name %>
+    <h2 class="mt-0">Title: <%- campaign.title %> </h2>
+    <h5 class="mt-0">Content: <%- campaign.name %> </h5>
+     <div class="col-md-6 position-static p-4 pl-md-0">
+    First closure date: <%- campaign.final_closure.getMonth() + 1 %>/<%- campaign.final_closure.getDate()%>/<%- campaign.final_closure.getFullYear() %> <%- campaign.final_closure.getHours()%>:<%- campaign.final_closure.getMinutes() %>
+  </div>
+   <div class="col-md-6 position-static p-4 pl-md-0">
+    Final closure date: <%- campaign.final_closure.getMonth() + 1 %>/<%- campaign.final_closure.getDate()%>/<%- campaign.final_closure.getFullYear() %> <%- campaign.final_closure.getHours()%>:<%- campaign.final_closure.getMinutes() %>
+  </div>
+  Status: 
+    <% if(campaign.first_closure > current){%>
+                    <h5 style="color: green;">Open</h5>
+                <% }else if(campaign.first_closure <= current && campaign.final_closure > current){%> 
+                   <h5 style="color: orange;">First closure closed</h5>
+                <%}else{%>
+                     <h5 style="color: red;">Closed</h5>
+                <% } %> 
     <a href="/campaign_detail/<%= campaign._id %> " class="stretched-link">Go somewhere</a>
   </div>
 </div>
