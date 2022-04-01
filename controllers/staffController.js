@@ -153,24 +153,42 @@ const staffController = {
       const campaigns = await Campaign.find({});
       //catch error
       //...........
-      const user = await User.find({
+      const idea = await Idea.findOneAndUpdate(
+        { _id: req.params.id },
+        { $push: { viewBy: req.user.id }, $inc: { numberOfViews: 1 } },
+        { new: true }
+      );
+      var user = await User.findOne({
         _id: req.user.id,
-        likeIdeas: { $in: [req.params.id] },
+        viewIdeas: { $elemMatch: { idea_id: req.params.id } },
+      });
+      if (!user) {
+        var user = await User.findOneAndUpdate(
+          {
+            _id: req.user.id,
+          },
+          {
+            $push: {
+              viewIdeas: [
+                { idea_id: req.params.id, isLike: false, isDislike: false },
+              ],
+            },
+          },
+          { new: true }
+        );
+      }
+
+      var likeState;
+      user.viewIdeas.forEach((element) => {
+        if (element.idea_id == req.params.id) return (likeState = element);
       });
 
-      var isLike = user.length != 0 ? true : false;
-      await Idea.updateOne(
-        { _id: req.params.id },
-        { $push: { viewBy: req.user.id } }
-      );
-
-      const idea = await Idea.findOne({ _id: req.params.id });
       res.render("idea-detail", {
         title: idea.title,
         categories,
         allCampaigns: campaigns.length,
         idea,
-        isLike,
+        likeState,
       });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -192,9 +210,13 @@ const staffController = {
           $push: {
             comments: [{ user: req.params.id, content: comment }],
           },
+          $inc: { numberOfComments: 1 },
         }
       );
-      await Idea.updateOne({ _id: req.params.id }, { $pop: { viewBy: 1 } });
+      await Idea.updateOne(
+        { _id: req.params.id },
+        { $pop: { viewBy: 1 }, $inc: { numberOfViews: -1 } }
+      );
       res.redirect("back");
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -202,20 +224,28 @@ const staffController = {
   },
   like: async (req, res) => {
     try {
-      const user = await User.find({
-        _id: req.user.id,
-        likeIdeas: { $in: [req.params.id] },
-      });
-      await Idea.updateOne({ _id: req.params.id }, { $pop: { viewBy: 1 } });
-      if (user.length != 0) return res.redirect("back");
-
-      await User.updateOne(
-        { _id: req.user.id },
-        { $push: { likeIdeas: req.params.id } }
+      const user = await User.findOneAndUpdate(
+        { _id: req.user.id, "viewIdeas.idea_id": req.params.id },
+        { $set: { "viewIdeas.$.isLike": true, "viewIdeas.$.isDislike": false } }
       );
+      const state = req.query.state;
+      if (state) {
+        await Idea.updateOne(
+          { _id: req.params.id },
+          {
+            $pull: { dislikeBy: req.user.id },
+            $inc: { numberOfDislikes: -1 },
+          }
+        );
+      }
       await Idea.updateOne(
         { _id: req.params.id },
-        { $push: { likeBy: req.params.id } }
+        {
+          $push: { likeBy: req.user.id },
+          $inc: { numberOfLikes: 1 },
+          $pop: { viewBy: 1 },
+          $inc: { numberOfViews: -1 },
+        }
       );
       res.redirect("back");
     } catch (error) {
@@ -224,20 +254,69 @@ const staffController = {
   },
   unlike: async (req, res) => {
     try {
-      const user = await User.find({
-        _id: req.user.id,
-        likeIdeas: { $in: [req.params.id] },
-      });
-      await Idea.updateOne({ _id: req.params.id }, { $pop: { viewBy: 1 } });
-      if (user.length == 0) return res.redirect("back");
-
       await User.updateOne(
-        { _id: req.user.id },
-        { $pull: { likeIdeas: req.params.id } }
+        { _id: req.user.id, "viewIdeas.idea_id": req.params.id },
+        { $set: { "viewIdeas.$.isLike": false } }
       );
       await Idea.updateOne(
         { _id: req.params.id },
-        { $pull: { likeBy: req.params.id } }
+        {
+          $pop: { viewBy: 1 },
+          $inc: { numberOfViews: -1 },
+          $pull: { likeBy: req.user.id },
+          $inc: { numberOfLikes: -1 },
+        }
+      );
+      res.redirect("back");
+    } catch (error) {
+      return res.status(500).send({ msg: error.message });
+    }
+  },
+  dislike: async (req, res) => {
+    try {
+      await User.updateOne(
+        { _id: req.user.id, "viewIdeas.idea_id": req.params.id },
+        { "viewIdeas.$.isLike": false, "viewIdeas.$.isDislike": true }
+      );
+      const state = req.query.state;
+      if (state) {
+        await Idea.updateOne(
+          { _id: req.params.id },
+          {
+            $pull: { likeBy: req.user.id },
+            $inc: { numberOfLikes: -1 },
+          }
+        );
+      }
+
+      await Idea.updateOne(
+        { _id: req.params.id },
+        {
+          $push: { dislikeBy: req.user.id },
+          $inc: { numberOfDislikes: 1 },
+          $pop: { viewBy: 1 },
+          $inc: { numberOfViews: -1 },
+        }
+      );
+      res.redirect("back");
+    } catch (error) {
+      return res.status(500).send({ msg: error.message });
+    }
+  },
+  unDislike: async (req, res) => {
+    try {
+      await User.updateOne(
+        { _id: req.user.id, "viewIdeas.idea_id": req.params.id },
+        { $set: { "viewIdeas.$.isDislike": false } }
+      );
+      await Idea.updateOne(
+        { _id: req.params.id },
+        {
+          $pop: { viewBy: 1 },
+          $inc: { numberOfViews: -1 },
+          $pull: { dislikeBy: req.user.id },
+          $inc: { numberOfDislikes: -1 },
+        }
       );
       res.redirect("back");
     } catch (error) {

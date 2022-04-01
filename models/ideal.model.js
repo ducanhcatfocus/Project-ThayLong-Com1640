@@ -49,6 +49,10 @@ const IdealSchema = new Schema({
       content: String,
     },
   ],
+  numberOfViews: { type: Number, default: 0 },
+  numberOfLikes: { type: Number, default: 0 },
+  numberOfDislikes: { type: Number, default: 0 },
+  numberOfComments: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 

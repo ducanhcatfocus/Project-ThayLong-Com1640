@@ -18,8 +18,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //set global value
 
-app.locals.error = null;
-app.locals.msg = null; //body parser middleware
+app.locals.allCampaigns = null;
+app.locals.categories = null; //body parser middleware
 //body parser middleware
 
 // parse application/x-www-form-urlencoded
@@ -76,6 +76,7 @@ app.use("/", auth.isUser, require("./routes/staffRoute"));
 app.use("/admin", auth.isAdmin, require("./routes/adminRoute"));
 app.use("/qam", auth.isQAM, require("./routes/qamRoute"));
 app.use("/campaigns", auth.isUser, require("./routes/campaignRoute"));
+app.use("/list_ideas", auth.isUser, require("./routes/idealRoute"));
 
 //start server
 const port = process.env.PORT || 3000;

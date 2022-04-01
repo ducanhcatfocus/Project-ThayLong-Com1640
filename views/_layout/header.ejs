@@ -35,7 +35,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="/home">Home</a></li>
-            <li><a href="#about">List of Ideas</a></li>
+            <li><a href="/list_ideas/1">List of Ideas</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if(user && user.role =='admin') {%> 
@@ -56,6 +56,8 @@
     <div class="container">
        <%- messages('messages', locals) %> 
        <div class="row">
+
+        <% if(allCampaigns || categories){ %> 
          <div class="col-xs-12 col-md-3">
            <h3>Categories</h3>
            <ul class="list-group">
@@ -67,6 +69,7 @@
               <% } %>
             </ul>
          </div>
+         <% } %> 
          <div class="col-xs-12 col-md-1"></div>
          <div class="col-xs-12 col-md-8">
 

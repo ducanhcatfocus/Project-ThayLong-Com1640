@@ -22,7 +22,9 @@ router
 
 router.route("/idea_detail/:id").get(staffController.getIdeaDetail);
 router.route("/comment/:id").post(staffController.comment);
-router.route("/like/:id").get(staffController.like);
+router.route("/like/:id").post(staffController.like);
 router.route("/unlike/:id").get(staffController.unlike);
+router.route("/dislike/:id").post(staffController.dislike);
+router.route("/unDislike/:id").get(staffController.unDislike);
 
 module.exports = router;

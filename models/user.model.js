@@ -28,16 +28,11 @@ const UserSchema = new Schema({
     type: String,
     default: null,
   },
-  likeIdeas: [
+  viewIdeas: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "ideal",
-    },
-  ],
-  dislikeIdeas: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "ideal",
+      idea_id: { type: Schema.Types.ObjectId },
+      isLike: Boolean,
+      isDislike: Boolean,
     },
   ],
   createdAt: { type: Date, default: Date.now },
