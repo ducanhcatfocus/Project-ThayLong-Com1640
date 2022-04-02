@@ -127,7 +127,7 @@ const staffController = {
         user_id: req.user.id,
         title,
         content,
-        campaign_id: campaignId.slice(0, -1),
+        campaign_id: campaignId,
         upload_file,
       });
       await newIdea.save();
@@ -145,7 +145,7 @@ const staffController = {
       }
 
       req.flash("success", "Campaign created");
-      return res.redirect("/campaign_detail/" + campaignId.slice(0, -1));
+      return res.redirect("/campaign_detail/" + campaignId);
     } catch (error) {
       return res.status(500).send({ msg: error.message });
     }

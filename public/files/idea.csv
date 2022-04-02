@@ -1,0 +1,53 @@
+_id,campaign_id,user_id,title,content,numberOfViews,numberOfLikes,numberOfDislikes,numberOfComments,createdAt
+624497021e85b50adfbd510f,62404d17b74ffbd9e91e7d9a,624205bd6be7c80a5cfd2856, dsadadsad,"<p>asdasdad</p>
+",186,-27,-15,5,Thu Mar 31 2022 00:44:34 GMT+0700 (Indochina Time)
+6244998db87ebb2bc0aae002,62404d17b74ffbd9e91e7d9a,624205bd6be7c80a5cfd2856, dsadasd,"<p>sadasdas</p>
+",40,-1,0,0,Thu Mar 31 2022 00:55:25 GMT+0700 (Indochina Time)
+62449aaf2c16cc422f95b370,62404d17b74ffbd9e91e7d9a,624205bd6be7c80a5cfd2856, asdasdsa,"<p>dsdsadas</p>
+",29,-10,-8,0,Thu Mar 31 2022 01:00:15 GMT+0700 (Indochina Time)
+6244a95b77e202d005a153a6,62404d17b74ffbd9e91e7d9a,624205bd6be7c80a5cfd2856, dsadasdsa,"<p>dsadsadas</p>
+",21,-5,-5,0,Thu Mar 31 2022 02:02:51 GMT+0700 (Indochina Time)
+6244aa29a19c9d8cbfb65542,62404d2cb74ffbd9e91e7da0,624205bd6be7c80a5cfd2856, bbbbbbbbbbbbbb,"<p>bsadasdas</p>
+",13,0,0,2,Thu Mar 31 2022 02:06:17 GMT+0700 (Indochina Time)
+6244ac3ea19c9d8cbfb6557a,62404d2cb74ffbd9e91e7da0,624205bd6be7c80a5cfd2856, dfsdfdsfds,"<p>dsfdsfsd</p>
+",1,1,0,5,Thu Mar 31 2022 02:15:10 GMT+0700 (Indochina Time)
+6244d0bda19c9d8cbfb65660,62404d17b74ffbd9e91e7d9a,624205bd6be7c80a5cfd2856, dasdsa,"<p>sdasdasda</p>
+",8,0,0,0,Thu Mar 31 2022 04:50:53 GMT+0700 (Indochina Time)
+6244d0eaa19c9d8cbfb65685,62404d2cb74ffbd9e91e7da0,624205bd6be7c80a5cfd2856, qewqertreetr,"<p>etrtrtrtrrt</p>
+",6,0,0,0,Thu Mar 31 2022 04:51:38 GMT+0700 (Indochina Time)
+6244d460a19c9d8cbfb656b4,62404d2cb74ffbd9e91e7da0,624205bd6be7c80a5cfd2856, khjkjkjkjk,"<p>jkjkjkjk</p>
+",8,1,0,1,Thu Mar 31 2022 05:06:24 GMT+0700 (Indochina Time)
+6246dcd165f9d4cea3c15706,62404dc1b74ffbd9e91e7dc8,6246da5cdabf65d9c598a1a5, sdasdsa,"<p>dsadsadsa</p>
+",4,0,0,0,Fri Apr 01 2022 18:06:57 GMT+0700 (Indochina Time)
+6246dd4ff8b1e01607fbfe5d,62432bd663100b69ea32dba9,6246da5cdabf65d9c598a1a5, dasdsad,"<p>sadasd</p>
+",2,0,0,0,Fri Apr 01 2022 18:09:03 GMT+0700 (Indochina Time)
+62471e511db5ccfa636699f3,62404d17b74ffbd9e91e7d9a,624715bfd71131b2c3ff432d, dsad,"<p>sadad</p>
+",28,-20,-21,4,Fri Apr 01 2022 22:46:25 GMT+0700 (Indochina Time)
+62477bfc27571fe1b9b0c170,62404de4b74ffbd9e91e7dd4,624715bfd71131b2c3ff432d, dy,"<p>tryrtyryrtyt</p>
+",5,-6,-7,2,Sat Apr 02 2022 05:26:04 GMT+0700 (Indochina Time)
+62484502fe9d91b4d5487372,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, dsada,"<p>asdad</p>
+",0,0,0,0,Sat Apr 02 2022 19:43:46 GMT+0700 (Indochina Time)
+624845880c8bfa8c714e90b0,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, sadsa,"<p>dasdsa</p>
+",0,0,0,0,Sat Apr 02 2022 19:46:00 GMT+0700 (Indochina Time)
+62484617d12fc1f4f831c49d,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, gdhdgdfg,"<p>dgdgdfg</p>
+",0,0,0,0,Sat Apr 02 2022 19:48:23 GMT+0700 (Indochina Time)
+62484761d12fc1f4f831c4a4,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, gdhdgdfg,"<p>dgdgdfg</p>
+",0,0,0,0,Sat Apr 02 2022 19:53:53 GMT+0700 (Indochina Time)
+624847d542ee720c4540d738,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, dada,"<p>dasdasdadsda</p>
+",0,0,0,0,Sat Apr 02 2022 19:55:49 GMT+0700 (Indochina Time)
+6248483c19689e1c3402b49e,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, dfsdfs,"<p>fdsfsdf</p>
+",0,0,0,0,Sat Apr 02 2022 19:57:32 GMT+0700 (Indochina Time)
+62484894e7e8dcec7bc4b4b7,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, sadsada,"<p>dasdsa</p>
+",0,0,0,0,Sat Apr 02 2022 19:59:00 GMT+0700 (Indochina Time)
+62484b199388226ec47f2b20,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, dasdasdasd,"<p>dasdada</p>
+",0,0,0,0,Sat Apr 02 2022 20:09:45 GMT+0700 (Indochina Time)
+624850ad8b8351e99ccd1fae,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, sadasdasda,"<p>dasdasd</p>
+",0,0,0,0,Sat Apr 02 2022 20:33:33 GMT+0700 (Indochina Time)
+624850b78b8351e99ccd1fbc,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, adssa,"<p>sadas</p>
+",0,0,0,0,Sat Apr 02 2022 20:33:43 GMT+0700 (Indochina Time)
+624850c18b8351e99ccd1fc8,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, gfdf,"<p>gffgfg</p>
+",0,0,0,0,Sat Apr 02 2022 20:33:53 GMT+0700 (Indochina Time)
+624850d18b8351e99ccd1fd4,62404de4b74ffbd9e91e7dd4,624815c5e4c91a4869b84143, sadasd,"<p>asdasdadasds</p>
+",0,0,0,0,Sat Apr 02 2022 20:34:09 GMT+0700 (Indochina Time)
+6248c01548e83f36ca26d3d9,6248bfec48e83f36ca26d3c6,624706a0ed8e8638709416b3, TEST IDEA,"<p>1231321312312312312321</p>
+",3,0,-1,0,Sun Apr 03 2022 04:28:53 GMT+0700 (Indochina Time)

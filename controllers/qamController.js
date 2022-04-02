@@ -1,5 +1,10 @@
 const Category = require("../models/category.model");
+const Ideas = require("../models/ideal.model");
 const Campaign = require("../models/campaign.model");
+const fileSystem = require("fs");
+const fastcsv = require("fast-csv");
+const admzip = require("adm-zip");
+const path = require("path");
 
 const qamController = {
   viewAllCategories: async (req, res) => {
@@ -67,6 +72,81 @@ const qamController = {
       res.redirect("/qam/");
     } catch (error) {
       return res.status(500).json({ msg: error.message });
+    }
+  },
+
+  getDownload: async (req, res) => {
+    try {
+      const campaigns = await Campaign.find();
+      res.render("qam/download", { campaigns });
+    } catch (error) {
+      return res.status(500).send({ msg: error.message });
+    }
+  },
+  downloadCSV: async (req, res) => {
+    try {
+      const ideas = await Ideas.aggregate([
+        {
+          $project: {
+            _id: 1,
+            campaign_id: 1,
+            user_id: 1,
+            title: 1,
+            content: 1,
+            numberOfViews: 1,
+            numberOfLikes: 1,
+            numberOfDislikes: 1,
+            numberOfComments: 1,
+            createdAt: 1,
+          },
+        },
+      ]);
+      var ws = fileSystem.createWriteStream("public/files/idea.csv");
+      fastcsv.write(ideas, { headers: true }).pipe(ws);
+
+      res.redirect("back");
+    } catch (error) {
+      return res.status(500).send({ msg: error.message });
+    }
+  },
+  downloadZip: async (req, res) => {
+    try {
+      const zip = new admzip();
+
+      const isDir = fileSystem.existsSync(
+        path.resolve(__dirname + "/../public/uploads/" + req.params.id)
+      );
+
+      if (isDir) {
+        var uploadDir = fileSystem.readdirSync(
+          path.resolve(__dirname + "/../public/uploads/" + req.params.id)
+        );
+        for (var i = 0; i < uploadDir.length; i++) {
+          zip.addLocalFile(
+            path.resolve(
+              __dirname +
+                "/../public/uploads/" +
+                req.params.id +
+                "/" +
+                uploadDir[i]
+            )
+          );
+        }
+        const file_after_download = req.params.id + ".zip";
+        const data = zip.toBuffer();
+
+        res.set("Content-Type", "application/octet-stream");
+        res.set(
+          "Content-Disposition",
+          `attachment; filename=${file_after_download}`
+        );
+        res.set("Content-Length", data.length);
+        return res.send(data);
+      }
+      req.flash("danger", "Topic has no uploaded file");
+      res.redirect("back");
+    } catch (error) {
+      return res.status(500).send({ msg: error.message });
     }
   },
 };

@@ -24,7 +24,6 @@
   </div>
   <% } %> 
 </div>
- {# like button #}
 <% if(likeState.isLike){ %> 
 <form action="/unlike/<%= idea._id %> " method="get">
     <button class="btn btn-primary">UnLike</button>
@@ -34,7 +33,6 @@
     <button class="btn btn-primary">Like</button>
 </form>
 <% } %> 
- {# dislike  button #}
 <% if(likeState.isDislike){ %> 
 <form action="/unDislike/<%= idea._id %> " method="get">
     <button class="btn btn-primary">UnDislike</button>

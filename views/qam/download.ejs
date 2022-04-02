@@ -1,0 +1,40 @@
+<%- include('../_layout/qamHeader') %> 
+
+
+ <h1 align="center">Ideas Data</h1>
+ <br>
+
+<a type="button" href="/qam/download_csv">export new data</a>
+ <br>
+ <a href="/files/idea.csv" download="asdd">idea.csv</a>
+
+
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Topic</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(campaigns != ''){%> <% campaigns.forEach(function(campaign, index){ %>
+          <% if(campaign.final_closure <= Date.now()){ %> 
+              <tr>
+                <td><%- index %></td>
+                <td><%- campaign.title %></td>
+                <td><%- campaign.name %></td>
+                <td style="color: red;">Close</td>
+                <td>
+                  <a href="/qam/download_zip/<%= campaign._id %>">Download files</a>
+                </td>
+              </tr>
+              <% } %> 
+              <% }) %> 
+        <% } %>
+    </tbody>
+</table>
+<%- include('../_layout/footer')  %> 

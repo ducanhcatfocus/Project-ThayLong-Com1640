@@ -17,8 +17,6 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 //set global value
-
-app.locals.allCampaigns = null;
 app.locals.categories = null; //body parser middleware
 //body parser middleware
 

@@ -10,4 +10,9 @@ router.route("/delete_category/:id").get(qamController.deleteCategory);
 
 router.route("/edit_category/:id").post(qamController.updateCategory);
 
+router.route("/download").get(qamController.getDownload);
+
+router.route("/download_csv").get(qamController.downloadCSV);
+router.route("/download_zip/:id").get(qamController.downloadZip);
+
 module.exports = router;

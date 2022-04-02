@@ -36,14 +36,14 @@
 <div class="row products">
      <% if(ideas != ''){%> <% ideas.forEach(function(idea, index){ %>
         <div class="row no-gutters bg-light position-relative">
-  <div class="col-md-6 mb-md-0 p-md-4">
-    <img src="/uploads/files-1648550919949.jpg" width="400 px" height="200px" class="w-100" alt="...">
+  <div class="col-md-6 position-static p-4 pl-md-0">
+    <h3 class="mt-0">Title: <%= idea.title %> </h3>
   </div>
   <div class="col-md-6 position-static p-4 pl-md-0">
-    <h5 class="mt-0">Title: <%= idea.title %> </h5>
+    <h5 class="mt-0">Content: <%- idea.content %> </h5>
   </div>
   <div class="col-md-6 position-static p-4 pl-md-0">
-    <%- idea.content %>
+    <h5 class="mt-0"><%- idea.upload_file.length %> file(s) uploaded </h5>
   </div>
   <div class="col-md-6 position-static p-4 pl-md-0">
     View: <%= idea.viewBy.length %> 
