@@ -5,8 +5,12 @@
         <div class="row no-gutters bg-light position-relative">
          <% idea.upload_file.forEach(function(file, index){ %> 
   <div class="col-md-6 mb-md-0 p-md-4">
-    <img src="/uploads/<%= file.default_image %> " width="100px" height="100px" class="w-100" alt="...">
-    <a href="/uploads/<%= file.filename %>" download="asdd"><%= file.filename %> </a>
+    <% if(file.mimetype.includes('image')){ %> 
+    <img src="/uploads/<%= idea.campaign_id %>/<%= file.default_image %> " width="100px" height="100px" class="w-100" alt="...">
+    <% }else{ %> 
+    <img src="/uploads/<%= file.default_image %>" width="100px" height="100px" class="w-100" alt="...">
+    <% } %> 
+    <a href="/uploads/<%= idea.campaign_id %>/<%= file.filename %>" download="asdd"><%= file.filename.slice(0, 25) %> </a>
   </div>
   <% }) %> 
  <div class="col-md-6 position-static p-4 pl-md-0">

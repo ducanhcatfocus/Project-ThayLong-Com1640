@@ -4,25 +4,36 @@ const Department = require("../models/department.model");
 const Category = require("../models/category.model");
 const bcrypt = require("bcrypt");
 const backup = require("../config/backup");
-// const jwt = require("jsonwebtoken");
 
 const adminController = {
-  adminHome: async (req, res) => {
-    res.send("admin area");
-  },
-
   createAccount: async (req, res) => {
     try {
       const { email, password, role, confirmedPassword, department } = req.body;
-      console.log(department);
       const user = await User.findOne({ email });
-      if (user) req.flash("danger", "Email is already existed");
-
-      if (password.length < 6)
+      const emailRegexp =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      if (user) {
+        req.flash("danger", "Email is already existed");
+        return res.redirect("back");
+      }
+      if (!emailRegexp.test(email)) {
+        req.flash("danger", "Email is not valid");
+        return res.redirect("back");
+      }
+      if (password.length < 6) {
         req.flash("danger", "Password is at least 6 characters long");
+        return res.redirect("back");
+      }
 
-      if (password != confirmedPassword)
+      if (role != "admin" || "qam" || "staff" || "qac") {
+        req.flash("danger", "Role is not valid");
+        return res.redirect("back");
+      }
+
+      if (password != confirmedPassword) {
         req.flash("danger", "Confirm Password is not match");
+        return res.redirect("back");
+      }
 
       //password encryption
       const passwordHash = await bcrypt.hash(password, 10);
@@ -33,29 +44,9 @@ const adminController = {
         department,
       });
 
-      //save mongoDB
       await newUser.save();
-
-      //create token
-
-      // const accesstoken = createAccessToken({
-      //     id: newUser._id
-      // })
-      // const refreshtoken = createRefreshToken({
-      //     id: newUser._id
-      // })
-
-      // res.cookie('refreshtoken', refreshtoken, {
-      //     httpOnly: true,
-      //     path: '/user/refresh_token'
-      // })
       req.flash("success", "Account Created");
       res.redirect("/admin/accounts");
-
-      // res.render("admin/create-account", {
-      //   msg: "add account success",
-      //   title: "Create Account",
-      // });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
     }
@@ -63,9 +54,6 @@ const adminController = {
   getCreateAccount: async (req, res) => {
     try {
       const departments = await Department.find({});
-
-      if (!departments)
-        return res.status(400).send({ msg: "Department does not exist" });
       res.render("admin/create-account", {
         title: "Create Account",
         departments,
@@ -78,7 +66,6 @@ const adminController = {
   viewAllAccounts: async (req, res) => {
     try {
       const user = await User.find({});
-      if (!user) return res.status(400).send({ msg: "User does not exist" });
       res.render("admin/view-accounts", { user });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -87,11 +74,11 @@ const adminController = {
   getAccountById: async (req, res) => {
     try {
       const departments = await Department.find({});
-
-      if (!departments)
-        return res.status(400).send({ msg: "Department does not exist" });
       const user = await User.findById(req.params.id);
-      if (!user) return res.status(400).json({ msg: "User does not exist" });
+      if (!user) {
+        req.flash("danger", "Account is not exist");
+        return res.redirect("back");
+      }
       res.render("admin/update-account", { user, departments });
     } catch (error) {
       return res.status(500).json({ msg: error.message });
@@ -143,8 +130,6 @@ const adminController = {
   viewAllDepartments: async (req, res) => {
     try {
       const departments = await Department.find({});
-      if (!departments)
-        return res.status(400).send({ msg: "User does not exist" });
       res.render("admin/create-department", { departments });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -155,8 +140,10 @@ const adminController = {
     try {
       const { name } = req.body;
       const department = await Department.findOne({ department_name: name });
-      if (department)
-        return res.status(400).send({ msg: "User does not exist" });
+      if (department) {
+        req.flash("danger", "Department is exist");
+        return res.redirect("back");
+      }
       const newDepartment = new Department({
         department_name: name,
       });
@@ -173,8 +160,6 @@ const adminController = {
     try {
       const current = new Date();
       const campaigns = await Campaign.find({});
-      if (!campaigns)
-        return res.status(400).send({ msg: "User does not exist" });
       res.render("admin/view-campaigns", { campaigns, current });
     } catch (error) {
       return res.status(500).send({ msg: error.message });
@@ -262,6 +247,7 @@ const adminController = {
       date1st = campaign.first_closure.toISOString().slice(0, -5);
       date2rd = campaign.final_closure.toISOString().slice(0, -5);
       if (!campaign) {
+        req.flash("danger", "Topic is not exist");
         return res.redirect("admin/campaigns");
       }
       return res.render("admin/update-campaign", {

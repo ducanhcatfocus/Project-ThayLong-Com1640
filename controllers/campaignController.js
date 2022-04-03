@@ -1,5 +1,4 @@
 const Campaign = require("../models/campaign.model");
-const Category = require("../models/category.model");
 
 const campaignController = {
   getCampaign: async (req, res) => {
