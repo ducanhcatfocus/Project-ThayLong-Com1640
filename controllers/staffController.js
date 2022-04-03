@@ -233,12 +233,12 @@ const staffController = {
   },
   like: async (req, res) => {
     try {
-      const user = await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { _id: req.user.id, "viewIdeas.idea_id": req.params.id },
         { $set: { "viewIdeas.$.isLike": true, "viewIdeas.$.isDislike": false } }
       );
       const state = req.query.state;
-      if (state) {
+      if (state == "true") {
         await Idea.updateOne(
           { _id: req.params.id },
           {
@@ -252,6 +252,11 @@ const staffController = {
         {
           $push: { likeBy: req.user.id },
           $inc: { numberOfLikes: 1 },
+        }
+      );
+      await Idea.updateOne(
+        { _id: req.params.id },
+        {
           $pop: { viewBy: 1 },
           $inc: { numberOfViews: -1 },
         }
@@ -288,7 +293,7 @@ const staffController = {
         { "viewIdeas.$.isLike": false, "viewIdeas.$.isDislike": true }
       );
       const state = req.query.state;
-      if (state) {
+      if (state == "true") {
         await Idea.updateOne(
           { _id: req.params.id },
           {
@@ -303,6 +308,11 @@ const staffController = {
         {
           $push: { dislikeBy: req.user.id },
           $inc: { numberOfDislikes: 1 },
+        }
+      );
+      await Idea.updateOne(
+        { _id: req.params.id },
+        {
           $pop: { viewBy: 1 },
           $inc: { numberOfViews: -1 },
         }
