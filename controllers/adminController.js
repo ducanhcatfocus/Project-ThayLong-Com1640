@@ -25,10 +25,10 @@ const adminController = {
         return res.redirect("back");
       }
 
-      if (role != "admin" || "qam" || "staff" || "qac") {
-        req.flash("danger", "Role is not valid");
-        return res.redirect("back");
-      }
+      // if (role != "admin" || "qam" || "staff" || "qac") {
+      //   req.flash("danger", "Role is not valid");
+      //   return res.redirect("back");
+      // }
 
       if (password != confirmedPassword) {
         req.flash("danger", "Confirm Password is not match");

@@ -1,65 +1,71 @@
-<%- include('_layout/header') %> 
-
-<div class="row products">
-     <% if(campaign != ''){%>
-        <div class="row no-gutters bg-light position-relative">
-  <div class="col-md-6 mb-md-0 p-md-4">
-    <img src="https://www.madeireiraestrela.com.br/images/joomlart/demo/default.jpg" width="400 px" height="200px" class="w-100" alt="...">
+<%- include('_layout/header') %>
+<h2 class="page-title">Topic</h2>
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-pills card-header-pills">
+      <li class="nav-item">
+        <h5><%- campaign.title %></h5>
+      </li>
+      <li class="nav-item ml-auto">
+        <% if(campaign.first_closure > current){%>
+        <h5 style="color: green">Open</h5>
+        <% }else if(campaign.first_closure <= current && campaign.final_closure
+        > current){%>
+        <h5 style="color: orange">First closure closed</h5>
+        <%}else{%>
+        <h5 style="color: red">Closed</h5>
+        <% } %>
+      </li>
+    </ul>
   </div>
-  <div class="col-md-6 position-static p-4 pl-md-0">
-    <h2 class="mt-0">Title: <%- campaign.title %> </h2>
-    <h5 class="mt-0">Content: <%- campaign.name %> </h5>
-     <div class="col-md-6 position-static p-4 pl-md-0">
-    First closure date: <%- campaign.final_closure.getMonth() + 1 %>/<%- campaign.final_closure.getDate()%>/<%- campaign.final_closure.getFullYear() %> <%- campaign.final_closure.getHours()%>:<%- campaign.final_closure.getMinutes() %>
-  </div>
-   <div class="col-md-6 position-static p-4 pl-md-0">
-    Final closure date: <%- campaign.final_closure.getMonth() + 1 %>/<%- campaign.final_closure.getDate()%>/<%- campaign.final_closure.getFullYear() %> <%- campaign.final_closure.getHours()%>:<%- campaign.final_closure.getMinutes() %>
+  <div class="card-body">
+    <p class="card-text"><%- campaign.name %></p>
+    <p class="card-text">
+      <%- campaign.first_closure.getMonth() + 1 %>/<%-
+      campaign.final_closure.getDate()%>/<%-
+      campaign.final_closure.getFullYear() %> <%-
+      campaign.final_closure.getHours()%>:<%-
+      campaign.final_closure.getMinutes() %>
+    </p>
+    <p class="card-text">
+      <%- campaign.final_closure.getMonth() + 1 %>/<%-
+      campaign.final_closure.getDate()%>/<%-
+      campaign.final_closure.getFullYear() %> <%-
+      campaign.final_closure.getHours()%>:<%-
+      campaign.final_closure.getMinutes() %>
+    </p>
   </div>
 </div>
-<br>
-    <% } %>
-</div> 
-    <% if(campaign.first_closure > current){%>
-        <h5 style="color: green;">Open</h5>
-        <button onclick="document.location='/submit_idea/<%= campaign._id %>'">Submit an Idea</button>
-    <% }else if(campaign.first_closure <= current && campaign.final_closure > current){%> 
-        <h5 style="color: orange;">First closure closed</h5>
-        <button onclick="document.location='/submit_idea/<%= campaign._id %>'" disabled>Submit an Idea</button>
-    <%}else{%>
-        <h5 style="color: red;">Closed</h5>
-        <button onclick="document.location='/submit_idea/<%= campaign._id %>'" disabled>Submit an Idea</button>
-    <% } %> 
 
-<br>
+<% if(campaign.first_closure > current){%>
+<button onclick="document.location='/submit_idea/<%= campaign._id %>'">
+  Submit an Idea
+</button>
+<% }else if(campaign.first_closure <= current && campaign.final_closure >
+current){%>
+<button onclick="document.location='/submit_idea/<%= campaign._id %>'" disabled>
+  Submit an Idea
+</button>
+<%}else{%>
+<button onclick="document.location='/submit_idea/<%= campaign._id %>'" disabled>
+  Submit an Idea
+</button>
+<% } %>
+
+<br />
 <h2 class="page-title">Ideas</h2>
 
-<div class="row products">
-     <% if(ideas != ''){%> <% ideas.forEach(function(idea, index){ %>
-        <div class="row no-gutters bg-light position-relative">
-  <div class="col-md-6 position-static p-4 pl-md-0">
-    <h3 class="mt-0">Title: <%= idea.title %> </h3>
-  </div>
-  <div class="col-md-6 position-static p-4 pl-md-0">
-    <h5 class="mt-0">Content: <%- idea.content %> </h5>
-  </div>
-  <div class="col-md-6 position-static p-4 pl-md-0">
-    <h5 class="mt-0"><%- idea.upload_file.length %> file(s) uploaded </h5>
-  </div>
-  <div class="col-md-6 position-static p-4 pl-md-0">
-    View: <%= idea.viewBy.length %> 
-    Comment:<%= idea.comments.length %> 
-    Like: <%= idea.likeBy.length %> 
-    DisLike: <%= idea.dislikeBy.length %> 
-  </div>
-  <div class="col-md-6 position-static p-4 pl-md-0">
+<% if(ideas != ''){%> <% ideas.forEach(function(idea, index){ %>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><%= idea.title %></h5>
+    <p class="card-text"><%- idea.content %></p>
+    <p class="card-text"><%- idea.upload_file.length %> file(s) uploaded</p>
+    <p class="card-text">
+      View: <%= idea.viewBy.length %> Comment:<%= idea.comments.length %> Like:
+      <%= idea.likeBy.length %> DisLike: <%= idea.dislikeBy.length %>
+    </p>
     <a href="/idea_detail/<%= idea._id %>" class="stretched-link">View</a>
   </div>
 </div>
-<br>
-        <% }) %> 
-    <% } %>
-
-
-
-<%- include('_layout/footer')  %> 
-
+<% }) %> <% } %> <%- include('_layout/footer') %>

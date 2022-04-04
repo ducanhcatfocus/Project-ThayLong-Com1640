@@ -1,74 +1,91 @@
 <%- include('_layout/header') %> 
 
-<div class="row products">
-     <% if(idea != ''){%>
-        <div class="row no-gutters bg-light position-relative">
-         <% idea.upload_file.forEach(function(file, index){ %> 
+<% if(idea != ''){%>
+<div class="row no-gutters bg-light position-relative">
+  <% idea.upload_file.forEach(function(file, index){ %>
   <div class="col-md-6 mb-md-0 p-md-4">
-    <% if(file.mimetype.includes('image')){ %> 
-    <img src="/uploads/<%= idea.campaign_id %>/<%= file.default_image %> " width="100px" height="100px" class="w-100" alt="...">
-    <% }else{ %> 
-    <img src="/uploads/<%= file.default_image %>" width="100px" height="100px" class="w-100" alt="...">
-    <% } %> 
-    <a href="/uploads/<%= idea.campaign_id %>/<%= file.filename %>" download="asdd"><%= file.filename.slice(0, 25) %> </a>
+    <% if(file.mimetype.includes('image')){ %>
+    <img
+      src="/uploads/<%= idea.campaign_id %>/<%= file.default_image %> "
+      width="100px"
+      height="100px"
+      class="w-100"
+      alt="..."
+    />
+    <% }else{ %>
+    <img
+      src="/uploads/<%= file.default_image %>"
+      width="100px"
+      height="100px"
+      class="w-100"
+      alt="..."
+    />
+    <% } %>
+    <a
+      href="/uploads/<%= idea.campaign_id %>/<%= file.filename %>"
+      download="asdd"
+      ><%= file.filename.slice(0, 25) %>
+    </a>
   </div>
-  <% }) %> 
- <div class="col-md-6 position-static p-4 pl-md-0">
-    <h5 class="mt-0">Title: <%-  %>  idea.title %> </h5>
+  <% }) %>
+  <div class="col-md-6 position-static p-4 pl-md-0">
+    <h5 class="mt-0">Title: <%- %> idea.title %></h5>
   </div>
   <div class="col-md-6 position-static p-4 pl-md-0">
     Content: <%- idea.content %>
   </div>
-  
+
   <div class="col-md-6 position-static p-4 pl-md-0">
-    View: <%= idea.viewBy.length %> 
-    Comment:<%= idea.comments.length %> 
-    Like: <%= idea.numberOfLikes %> 
-    DisLike: <%= idea.numberOfDislikes%> 
+    View: <%= idea.viewBy.length %> Comment:<%= idea.comments.length %> Like:
+    <%= idea.numberOfLikes %> DisLike: <%= idea.numberOfDislikes%>
   </div>
-  <% } %> 
-</div>
-<% if(likeState.isLike){ %> 
-<form action="/unlike/<%= idea._id %> " method="get">
+  <% } %> <% if(likeState.isLike){ %>
+  <form action="/unlike/<%= idea._id %> " method="get">
     <button class="btn btn-primary">UnLike</button>
-</form>
-<% } else{ %> 
-<form action="/like/<%= idea._id %>?state=<%= likeState.isDislike %>" method="post">
+  </form>
+  <% } else{ %>
+  <form
+    action="/like/<%= idea._id %>?state=<%= likeState.isDislike %>"
+    method="post"
+  >
     <button class="btn btn-primary">Like</button>
-</form>
-<% } %> 
-<% if(likeState.isDislike){ %> 
-<form action="/unDislike/<%= idea._id %> " method="get">
+  </form>
+  <% } %> <% if(likeState.isDislike){ %>
+  <form action="/unDislike/<%= idea._id %> " method="get">
     <button class="btn btn-primary">UnDislike</button>
-</form>
-<% } else{ %> 
-<form action="/dislike/<%= idea._id %>?state=<%= likeState.isLike %>" method="post">
+  </form>
+  <% } else{ %>
+  <form
+    action="/dislike/<%= idea._id %>?state=<%= likeState.isLike %>"
+    method="post"
+  >
     <button class="btn btn-primary">Dislike</button>
-</form>
-<% } %> 
-<br>
-<div class="row products form-group" style="
-  height: 300px;
-  overflow: auto; ">
-     <% if(idea.comments != ''){%> <% idea.comments.forEach(function(comment, index){ %>
-  <div class="col-md-6 position-static p-4 pl-md-0">
-    <h5 class="mt-0">anonymous</h5>
-  </div>
-  
-  <div class="col-md-6 position-static p-4 pl-md-0">
-    <%= comment.content %>
-  </div>
-    <% }) %> 
-    <% } %>
+  </form>
+  <% } %>
 </div>
-<form action="/comment/<%= idea._id %> " method="post">
+
+<div class="card h-25">
+  <div class="card-body overflow-auto">
     <div class="form-group">
-        <input type="text" name="comment" id="" value=" " class="form-control" placeholder="" required="true" >
+      <form action="/comment/<%= idea._id %> " method="post">
+        <div class="form-group">
+          <input
+            type="text"
+            name="comment"
+            class="form-control"
+            required="true"
+          />
+        </div>
+        <button class="btn btn-primary">Comment</button>
+      </form>
+      <% if(idea.comments != ''){%> <% idea.comments.forEach(function(comment,
+      index){ %>
+      <div class="">
+        <h5 class="mt-0">anonymous</h5>
+      </div>
+      <div class=""><%= comment.content %></div>
+      <% }) %> <% } %>
     </div>
-    <button class="btn btn-primary">Comment</button>
-</form>
-
-
-
-<%- include('_layout/footer')  %> 
-
+  </div>
+</div>
+<%- include('_layout/footer') %>
