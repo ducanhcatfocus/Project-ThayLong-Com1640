@@ -5,6 +5,16 @@ const User = require("../models/user.model");
 const path = require("path");
 const mailer = require("../config/sendMail");
 
+const Pusher = require("pusher");
+
+const pusher = new Pusher({
+  appId: "1375814",
+  key: "76f245f1d43cbfa8bb93",
+  secret: "c53484db43709fabb7d3",
+  cluster: "ap1",
+  useTLS: true,
+});
+
 const staffController = {
   home: async (req, res) => {
     try {
@@ -131,6 +141,9 @@ const staffController = {
         upload_file,
       });
       await newIdea.save();
+      await pusher.trigger("my-channel1", "my-event1", {
+        os: title,
+      });
 
       const qamUser = await User.find({ role: "qam" });
       if (qamUser.length != 0) {
@@ -184,9 +197,12 @@ const staffController = {
       user.viewIdeas.forEach((element) => {
         if (element.idea_id == req.params.id) return (likeState = element);
       });
-
+      await pusher.trigger("my-channel", "my-event", {
+        points: 1,
+        os: idea.title,
+      });
       res.render("idea-detail", {
-        title: idea.title,
+        title: "idea detail",
         categories,
         idea,
         likeState,

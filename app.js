@@ -15,6 +15,7 @@ app.set("view engine", "ejs");
 
 //public folder
 app.use(express.static(path.join(__dirname, "public")));
+console.log(path.join(__dirname, "public"));
 
 //set global value
 app.locals.categories = null; //body parser middleware

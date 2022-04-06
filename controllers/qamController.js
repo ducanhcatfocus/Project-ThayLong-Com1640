@@ -149,6 +149,15 @@ const qamController = {
       return res.status(500).send({ msg: error.message });
     }
   },
+
+  getDashboard: async (req, res) => {
+    try {
+      const ideas = await Ideas.find();
+      res.render("qam/dashboard", { ideas });
+    } catch (error) {
+      return res.status(500).send({ msg: error.message });
+    }
+  },
 };
 
 module.exports = qamController;

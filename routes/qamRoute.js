@@ -14,5 +14,6 @@ router.route("/download").get(qamController.getDownload);
 
 router.route("/download_csv").get(qamController.downloadCSV);
 router.route("/download_zip/:id").get(qamController.downloadZip);
+router.route("/dashboard").get(qamController.getDashboard);
 
 module.exports = router;
